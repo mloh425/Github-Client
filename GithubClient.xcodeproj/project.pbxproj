@@ -14,6 +14,8 @@
 		3416ABFF1DF0AE5800627EF6 /* GithubClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3416ABFE1DF0AE5800627EF6 /* GithubClientTests.swift */; };
 		3416AC0A1DF0AE5800627EF6 /* GithubClientUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3416AC091DF0AE5800627EF6 /* GithubClientUITests.swift */; };
 		3416AC1B1DF0B85C00627EF6 /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3416AC1A1DF0B85C00627EF6 /* Keys.swift */; };
+		3416AC201DF0C1C700627EF6 /* OAuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3416AC1F1DF0C1C700627EF6 /* OAuthViewController.swift */; };
+		3416AC221DF0C1F200627EF6 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3416AC211DF0C1F200627EF6 /* SignInViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +49,8 @@
 		3416AC091DF0AE5800627EF6 /* GithubClientUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubClientUITests.swift; sourceTree = "<group>"; };
 		3416AC0B1DF0AE5800627EF6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3416AC1A1DF0B85C00627EF6 /* Keys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Keys.swift; sourceTree = "<group>"; };
+		3416AC1F1DF0C1C700627EF6 /* OAuthViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OAuthViewController.swift; sourceTree = "<group>"; };
+		3416AC211DF0C1F200627EF6 /* SignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,11 +102,9 @@
 			isa = PBXGroup;
 			children = (
 				3416ABE91DF0AE5800627EF6 /* AppDelegate.swift */,
-				3416AC1A1DF0B85C00627EF6 /* Keys.swift */,
-				3416ABED1DF0AE5800627EF6 /* Main.storyboard */,
-				3416ABF01DF0AE5800627EF6 /* Assets.xcassets */,
-				3416ABF21DF0AE5800627EF6 /* LaunchScreen.storyboard */,
-				3416ABF51DF0AE5800627EF6 /* Info.plist */,
+				3416AC231DF0C67A00627EF6 /* View Controllers */,
+				3416AC241DF0C6A100627EF6 /* View */,
+				3416AC1C1DF0B92800627EF6 /* Supporting Files */,
 			);
 			path = GithubClient;
 			sourceTree = "<group>";
@@ -123,6 +125,34 @@
 				3416AC0B1DF0AE5800627EF6 /* Info.plist */,
 			);
 			path = GithubClientUITests;
+			sourceTree = "<group>";
+		};
+		3416AC1C1DF0B92800627EF6 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				3416ABF51DF0AE5800627EF6 /* Info.plist */,
+				3416AC1A1DF0B85C00627EF6 /* Keys.swift */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		3416AC231DF0C67A00627EF6 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				3416AC1F1DF0C1C700627EF6 /* OAuthViewController.swift */,
+				3416AC211DF0C1F200627EF6 /* SignInViewController.swift */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		3416AC241DF0C6A100627EF6 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				3416ABED1DF0AE5800627EF6 /* Main.storyboard */,
+				3416ABF01DF0AE5800627EF6 /* Assets.xcassets */,
+				3416ABF21DF0AE5800627EF6 /* LaunchScreen.storyboard */,
+			);
+			name = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -262,7 +292,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3416AC221DF0C1F200627EF6 /* SignInViewController.swift in Sources */,
 				3416ABEA1DF0AE5800627EF6 /* AppDelegate.swift in Sources */,
+				3416AC201DF0C1C700627EF6 /* OAuthViewController.swift in Sources */,
 				3416AC1B1DF0B85C00627EF6 /* Keys.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

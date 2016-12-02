@@ -1,11 +1,109 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="X15-fH-EW5">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
-    <scenes/>
+    <scenes>
+        <!--Sign In View Controller-->
+        <scene sceneID="Hd1-Qy-kHA">
+            <objects>
+                <viewController id="X15-fH-EW5" customClass="SignInViewController" customModule="GithubClient" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="YbJ-Rr-Dgk"/>
+                        <viewControllerLayoutGuide type="bottom" id="Xad-mY-vkg"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="kU1-fJ-xg7">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ykD-NT-ech">
+                                <rect key="frame" x="67" y="461" width="240" height="48"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <state key="normal" title="Sign in"/>
+                                <connections>
+                                    <segue destination="EOz-EH-iUd" kind="show" id="mN9-RK-mmc"/>
+                                </connections>
+                            </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Uq5-VA-QuS">
+                                <rect key="frame" x="67" y="213" width="240" height="240"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="240" id="S2O-Kr-ynb"/>
+                                    <constraint firstAttribute="width" constant="240" id="vii-dY-9TY"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Github Client" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V3U-IA-Zrv">
+                                <rect key="frame" x="67" y="169" width="240" height="36"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Uq5-VA-QuS" firstAttribute="trailing" secondItem="V3U-IA-Zrv" secondAttribute="trailing" id="4V0-QY-Lt3"/>
+                            <constraint firstItem="V3U-IA-Zrv" firstAttribute="centerX" secondItem="kU1-fJ-xg7" secondAttribute="centerX" id="CXo-hV-OeI"/>
+                            <constraint firstItem="ykD-NT-ech" firstAttribute="trailing" secondItem="V3U-IA-Zrv" secondAttribute="trailing" id="KhR-BQ-sdR"/>
+                            <constraint firstItem="ykD-NT-ech" firstAttribute="leading" secondItem="V3U-IA-Zrv" secondAttribute="leading" id="S6P-yv-Jrh"/>
+                            <constraint firstItem="ykD-NT-ech" firstAttribute="centerX" secondItem="kU1-fJ-xg7" secondAttribute="centerX" id="YiV-M5-nUL"/>
+                            <constraint firstItem="Uq5-VA-QuS" firstAttribute="top" secondItem="V3U-IA-Zrv" secondAttribute="bottom" constant="8" id="Zji-xF-L77"/>
+                            <constraint firstItem="Uq5-VA-QuS" firstAttribute="leading" secondItem="V3U-IA-Zrv" secondAttribute="leading" id="bTd-vY-4Re"/>
+                            <constraint firstItem="Uq5-VA-QuS" firstAttribute="centerX" secondItem="kU1-fJ-xg7" secondAttribute="centerX" id="sqU-PV-S0h"/>
+                            <constraint firstItem="Uq5-VA-QuS" firstAttribute="centerY" secondItem="kU1-fJ-xg7" secondAttribute="centerY" id="xjT-Zo-hFQ"/>
+                            <constraint firstItem="ykD-NT-ech" firstAttribute="top" secondItem="Uq5-VA-QuS" secondAttribute="bottom" constant="8" id="y8R-lh-bTh"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iBR-Pp-1vM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="120.8" y="-503.29835082458777"/>
+        </scene>
+        <!--Auth View Controller-->
+        <scene sceneID="kKQ-ZW-8jj">
+            <objects>
+                <viewController id="EOz-EH-iUd" customClass="OAuthViewController" customModule="GithubClient" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="m2O-qS-sYU"/>
+                        <viewControllerLayoutGuide type="bottom" id="5dL-hq-oWL"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="p6X-h5-uQU">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4N3-vU-neU">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </webView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6th-6H-6aG">
+                                <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                                <items>
+                                    <barButtonItem systemItem="stop" id="qvs-ns-3iN"/>
+                                </items>
+                            </toolbar>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="4N3-vU-neU" firstAttribute="top" secondItem="6th-6H-6aG" secondAttribute="bottom" id="4Zf-8v-siO"/>
+                            <constraint firstItem="4N3-vU-neU" firstAttribute="top" secondItem="6th-6H-6aG" secondAttribute="bottom" id="7O0-SB-U3a"/>
+                            <constraint firstAttribute="trailing" secondItem="4N3-vU-neU" secondAttribute="trailing" id="aoj-FY-Btx"/>
+                            <constraint firstItem="5dL-hq-oWL" firstAttribute="top" secondItem="4N3-vU-neU" secondAttribute="bottom" id="fxB-xI-ORU"/>
+                            <constraint firstItem="6th-6H-6aG" firstAttribute="leading" secondItem="p6X-h5-uQU" secondAttribute="leading" id="lM7-Fk-sMO"/>
+                            <constraint firstItem="4N3-vU-neU" firstAttribute="leading" secondItem="p6X-h5-uQU" secondAttribute="leading" id="oiH-nv-UNB"/>
+                            <constraint firstAttribute="trailing" secondItem="6th-6H-6aG" secondAttribute="trailing" id="qQ6-3p-hav"/>
+                            <constraint firstItem="6th-6H-6aG" firstAttribute="top" secondItem="m2O-qS-sYU" secondAttribute="bottom" id="zYB-Eb-p1k"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="webView" destination="4N3-vU-neU" id="xqE-9A-ano"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="96b-vM-Qx2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="120.8" y="194.75262368815595"/>
+        </scene>
+    </scenes>
 </document>
