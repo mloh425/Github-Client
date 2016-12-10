@@ -9,19 +9,33 @@
 import UIKit
 
 class SignInViewController: UIViewController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        checkForExistingAccessToken()
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-
+    func checkForExistingAccessToken() {
+        if UserDefaults.standard.object(forKey: "GithubAccessToken") != nil {
+//            print("Can send to new VC")
+//            //Will this create multiple instances?
+//            let menuTabBarController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MenuTabBarController") as! UITabBarController
+//            present(menuTabBarController, animated: true, completion: nil)
+            dismiss(animated: true, completion: nil)
+        }
+        
+    }
     /*
     // MARK: - Navigation
 

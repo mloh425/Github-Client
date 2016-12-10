@@ -32,7 +32,8 @@ class OAuthViewController: UIViewController, UIWebViewDelegate {
     
     //Make initial request for OAuth to get user approval
     func startAuthorization() {
-        let redirectURI = "https://com.matthewloh.github.oauth/oauth"
+        //let redirectURI = "https://com.matthewloh.github.oauth/oauth"
+        let redirectURI = "GithubClient://oauth"
         let scope = "user,repo"
 
         
@@ -51,8 +52,8 @@ class OAuthViewController: UIViewController, UIWebViewDelegate {
     //Extract the code from the response from GitHub
     func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
         let url = request.url!
-        print(url)
-        if url.host == "com.matthewloh.github.oauth" {
+        //if url.host == "com.matthewloh.github.oauth" {
+        if url.host == "oauth" {
             if url.absoluteString.range(of: "code") != nil {
                 let urlParts = url.absoluteString.components(separatedBy: "?")
                 let code = urlParts[1].components(separatedBy: "=")[1]
@@ -117,6 +118,10 @@ class OAuthViewController: UIViewController, UIWebViewDelegate {
         task.resume()
     }
 
+    @IBAction func dismiss(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
+    }
+    
     /*
     // MARK: - Navigation
 
