@@ -30,10 +30,15 @@ class GitHubSearchViewController: UIViewController {
     var searchedRepositories = [Repos]()
     var searchedUsers = [UserSearch]()
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: true)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         searchBar.delegate = self
-
+        
         // Do any additional setup after loading the view.
     }
 

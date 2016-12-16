@@ -19,18 +19,28 @@ class MyProfileViewController: UIViewController {
     @IBOutlet weak var usernameLabel: UILabel!
     var myProfile : MyProfile!
     var myProfileRepositories = [MyProfileRepos]()
+    var repos = [Repos]()
     let imageQueue = OperationQueue()
+    let refreshController = UIRefreshControl()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
+        
+        refreshController.tintColor = UIColor.black
+        refreshController.addTarget(self, action: #selector(MyProfileViewController.fetchProfileRepos), for: UIControlEvents.valueChanged)
+        tableView.addSubview(refreshController)
+        
+
                 // Do any additional setup after loading the view.
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         checkForExistingAccessToken()
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(MyProfileViewController.fetchProfileRepos), name: NSNotification.Name(rawValue: "repoForkSuccessful"), object: nil)
     }
 
     override func didReceiveMemoryWarning() {
@@ -73,16 +83,23 @@ class MyProfileViewController: UIViewController {
     }
     
     func fetchProfileRepos() {
-        GithubService.myProfileReposForSearchTerm  { (errorDescription, myProfileRepos) -> (Void) in
+        let url = "https://api.github.com/user/repos"
+        GithubService.userProfileReposForSearchTerm(url: url) { (errorDescription, repositories) -> (Void) in
             if let errorDescription = errorDescription {
                 print(errorDescription)
-            } else if let repos = myProfileRepos {
-                DispatchQueue.main.async(execute: { 
-                    self.myProfileRepositories = repos
+            } else if let repos = repositories {
+                DispatchQueue.main.async(execute: {
+                    self.repos = repos
+                    self.repos.sort(by: { (date1 : Repos, date2: Repos) -> Bool in
+                        date1.updatedAt > date2.updatedAt
+                    })
+                    
                     self.tableView.reloadData()
+                    self.refreshController.endRefreshing()
                 })
             }
         }
+
     }
     
     func setFields() {
@@ -105,16 +122,19 @@ class MyProfileViewController: UIViewController {
 
 extension MyProfileViewController : UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return myProfileRepositories.count
+        //return myProfileRepositories.count
+        return repos.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MyRepoCell", for: indexPath) as! MyProfileTableViewCell
-        let repo = myProfileRepositories[indexPath.row]
+        //let repo = myProfileRepositories[indexPath.row]
+        let repo = repos[indexPath.row]
         //Tag necessary?
         cell.repoNameLabel.text = repo.name
         cell.repoDescriptionTextView.text = repo.description
-        cell.dateLabel.text = repo.updatedAt
+        //cell.dateLabel.text = repo.updatedAt
+        cell.dateLabel.text = repo.updatedAtString
         return cell
     }
     

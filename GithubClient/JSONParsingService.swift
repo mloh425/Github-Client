@@ -35,29 +35,40 @@ class JSONParsingService {
                     myProfile = MyProfile(login: login, name: name, htmlURL: htmlURL, bio: bio, avatarURL: avatarURL, publicRepos: publicRepos, ownedPrivateRepos: ownedPrivateRepos, followers: followers, following: following)
                     return myProfile
                 }
-                return nil
             }
         return nil
     }
     
     
-    class func myProfileReposJSONParser (jsonData : Data) throws -> [MyProfileRepos]? {
-        if let myProfileReposObject = try JSONSerialization.jsonObject(with: jsonData, options: JSONSerialization.ReadingOptions.mutableContainers) as? [[String : AnyObject]] {
-            var myProfileRepos = [MyProfileRepos]()
-            for repo in myProfileReposObject {
-            var description = " "
-            if let name = repo["name"] as? String,
-               let htmlURL = repo["html_url"] as? String,
-               let updatedAt = repo["updated_at"] as? String {
+    class func userProfileReposJSONParser (jsonData : Data) throws -> [Repos]? {
+        if let profileReposObject = try JSONSerialization.jsonObject(with: jsonData, options: JSONSerialization.ReadingOptions.mutableContainers) as? [[String : AnyObject]] {
+            var profileRepos = [Repos]()
+            for repo in profileReposObject {
+                var description = " "
+                var date = Date()
+                if let name = repo["name"] as? String,
+                    let htmlURL = repo["html_url"] as? String,
+                    let starGazers = repo["stargazers_count"] as? Int,
+                    let forks = repo["forks_count"] as? Int,
+                    let updatedAt = repo["updated_at"] as? String,
+                    let owner = repo["owner"] as? [String: AnyObject],
+                    let ownerName = owner["login"] as? String,
+                    let avatarURL = owner["avatar_url"] as? String {
                     let setUpdateTime = dateFormatHelper(date: updatedAt)
+                    if let setDate = convertToDate(date: updatedAt) {
+                        date = setDate
+                    }
+                    
                     if let setDescription = repo["description"] as? String {
                         description = setDescription
                     }
-                let myProfileRepo = MyProfileRepos(name: name, description: description, htmlURL: htmlURL, updatedAt: setUpdateTime)
-                    myProfileRepos.append(myProfileRepo)
+                    let profileRepo = Repos(name: name, description: description, htmlURL: htmlURL, avatarURL: avatarURL, forksCount: forks, stargazersCount: starGazers, ownerName: ownerName, updatedAt: date, updatedAtString: setUpdateTime)
+                    
+                    //let profileRepo = Repos(name: name, description: description, htmlURL: htmlURL, updatedAt: setUpdateTime, avatarURL: avatarURL, forksCount: forks, stargazersCount: starGazers, ownerName: ownerName)
+                    profileRepos.append(profileRepo)
                 }
             }
-            return myProfileRepos
+            return profileRepos
         }
         return nil
     }
@@ -68,6 +79,7 @@ class JSONParsingService {
             var repos = [Repos]()
             for item in items {
                 var description = " "
+                var date = Date()
                 if let name = item["name"] as? String,
                     let htmlURL = item["html_url"] as? String,
                     let starGazers = item["stargazers_count"] as? Int,
@@ -77,10 +89,13 @@ class JSONParsingService {
                     let ownerName = owner["login"] as? String,
                     let avatarURL = owner["avatar_url"] as? String {
                     let setUpdateTime = dateFormatHelper(date: updatedAt)
+                    if let setDate = convertToDate(date: updatedAt) {
+                        date = setDate
+                    }
                     if let setDescription = item["description"] as? String {
                         description = setDescription
                     }
-                    let repo = Repos(name: name, description: description, htmlURL: htmlURL, updatedAt: setUpdateTime, avatarURL: avatarURL, forksCount: forks, stargazersCount: starGazers, ownerName: ownerName)
+                    let repo = Repos(name: name, description: description, htmlURL: htmlURL, avatarURL: avatarURL, forksCount: forks, stargazersCount: starGazers, ownerName: ownerName, updatedAt: date, updatedAtString: setUpdateTime)
                     repos.append(repo)
                     
                 }
@@ -90,6 +105,8 @@ class JSONParsingService {
         }
         return nil
     }
+    
+
     
     /*
  "login": "mojombo",
@@ -125,6 +142,27 @@ class JSONParsingService {
         }
         return nil
     }
+    
+    
+    class func userJSONParser (jsonData : Data) throws -> User? {
+        if let userObject = try JSONSerialization.jsonObject(with: jsonData, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String : AnyObject]{
+                var bio = " "
+                if let login = userObject["login"] as? String,
+                    let avatarURL = userObject["avatar_url"] as? String,
+                    let htmlURL = userObject["html_url"] as? String,
+                    let reposURL = userObject["repos_url"] as? String,
+                    let publicRepos = userObject["public_repos"] as? Int,
+                    let followers = userObject["followers"] as? Int,
+                    let following = userObject["following"] as? Int {
+                    if let setBio = userObject["bio"] as? String {
+                        bio = setBio
+                    }
+                    let user = User(login: login, htmlURL: htmlURL, bio: bio, avatarURL: avatarURL, publicRepos: publicRepos, followers: followers, following: following, reposURL : reposURL)
+                    return user
+                }
+        }
+        return nil
+    }
 }
 
 extension JSONParsingService {
@@ -135,5 +173,17 @@ extension JSONParsingService {
         var dateFromString = dateFormatter.date(from: dateParts)
         dateFormatter.dateFormat = "MM-dd-yyyy"
         return dateFormatter.string(from: dateFromString!)
+    }
+    
+    class func convertToDate(date : String) -> Date? {
+        let dateParts = date.components(separatedBy: "T")[0]
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        var dateFromString = dateFormatter.date(from: dateParts)
+        dateFormatter.dateFormat = "MM-dd-yyyy"
+        if let date = dateFromString {
+            return date
+        }
+        return nil
     }
 }

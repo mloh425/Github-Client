@@ -32,42 +32,6 @@ class GithubService {
                     }
                 case 400...499:
                     completionHandler("An unexpected error occurred in the application", nil)
-                
-                case 500...599:
-                    completionHandler("An unexpected error occurred with the servers", nil)
-                default:
-                    completionHandler("An unexpected error occurred.", nil)
-                }
-            }
-        }.resume()
- 
-    }
-    
-    class func myProfileReposForSearchTerm(completionHandler: @escaping (String?, [MyProfileRepos]?) -> (Void)) {
-        let baseURL = URL(string: "https://api.github.com/user/repos")
-        var request = URLRequest(url: baseURL!)
-        if let token = UserDefaults.standard.object(forKey: "GithubAccessToken") {
-            request.setValue("token \(token)", forHTTPHeaderField: "Authorization")
-            request.setValue("application/json", forHTTPHeaderField: "Accept")
-            request.httpMethod = "GET"
-            
-        }
-        
-        URLSession.shared.dataTask(with: request) { (data, response, error) in
-            if let error = error {
-                print(error.localizedDescription)
-            } else if let httpResponse = response as? HTTPURLResponse {
-                switch httpResponse.statusCode {
-                case 200:
-                    do {
-                        let results = try JSONParsingService.myProfileReposJSONParser(jsonData: data!)
-                        completionHandler(nil, results)
-                        
-                    } catch {
-                        print("ProfileRepo JSON Parser error.")
-                    }
-                case 400...499:
-                    completionHandler("An unexpected error occurred in the application", nil)
                     
                 case 500...599:
                     completionHandler("An unexpected error occurred with the servers", nil)
@@ -75,7 +39,7 @@ class GithubService {
                     completionHandler("An unexpected error occurred.", nil)
                 }
             }
-        }.resume()
+            }.resume()
         
     }
     
@@ -112,13 +76,13 @@ class GithubService {
                     completionHandler("An unexpected error occurred.", nil)
                 }
             }
-        }.resume()
+            }.resume()
     }
     
     class func reposForSearchTerm(url : String, completionHandler: @escaping (String?, [Repos]?) -> (Void)) {
         let baseURL = URL(string: url)
         var request = URLRequest(url: baseURL!)
- 
+        
         
         if let token = UserDefaults.standard.object(forKey: "GithubAccessToken") {
             request.setValue("token \(token)", forHTTPHeaderField: "Authorization")
@@ -131,7 +95,7 @@ class GithubService {
             if let error = error {
                 print(error.localizedDescription)
             } else if let httpResponse = response as? HTTPURLResponse {
- 
+                
                 switch httpResponse.statusCode {
                 case 200:
                     do {
@@ -139,7 +103,7 @@ class GithubService {
                         completionHandler(nil, results)
                         
                     } catch {
-                        print("ProfileRepo JSON Parser error.")
+                        print("Repos JSON Parser error.")
                     }
                 case 400...499:
                     completionHandler("An unexpected error occurred in the application", nil)
@@ -151,4 +115,108 @@ class GithubService {
             }
         }.resume()
     }
+    
+    class func specificUserforSearchTerm(url : String, completionHandler: @escaping (String?, User?) -> (Void)) {
+        let baseURL = URL(string: url)
+        var request = URLRequest(url: baseURL!)
+        
+        if let token = UserDefaults.standard.object(forKey: "GithubAccessToken") {
+            request.setValue("token \(token)", forHTTPHeaderField: "Authorization")
+            request.setValue("application/json", forHTTPHeaderField: "Accept")
+            request.httpMethod = "GET"
+            
+        }
+        
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
+            if let error = error {
+                print(error.localizedDescription)
+            } else if let httpResponse = response as? HTTPURLResponse {
+                
+                switch httpResponse.statusCode {
+                case 200:
+                    do {
+                        let results = try JSONParsingService.userJSONParser(jsonData: data!)
+                        completionHandler(nil, results)
+                        
+                    } catch {
+                        print("User profile JSON Parser error.")
+                    }
+                case 400...499:
+                    completionHandler("An unexpected error occurred in the application", nil)
+                case 500...599:
+                    completionHandler("An unexpected error occurred with the servers", nil)
+                default:
+                    completionHandler("An unexpected error occurred.", nil)
+                }
+            }
+        }.resume()
+    }
+    
+    class func userProfileReposForSearchTerm(url: String, completionHandler: @escaping (String?, [Repos]?) -> (Void)) {
+        let baseURL = URL(string: url)
+        var request = URLRequest(url: baseURL!)
+        if let token = UserDefaults.standard.object(forKey: "GithubAccessToken") {
+            request.setValue("token \(token)", forHTTPHeaderField: "Authorization")
+            request.setValue("application/json", forHTTPHeaderField: "Accept")
+            request.httpMethod = "GET"
+            
+        }
+        
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
+            if let error = error {
+                print(error.localizedDescription)
+            } else if let httpResponse = response as? HTTPURLResponse {
+                switch httpResponse.statusCode {
+                case 200:
+                    do {
+                        let results = try JSONParsingService.userProfileReposJSONParser(jsonData: data!)
+                        completionHandler(nil, results)
+                        
+                    } catch {
+                        print("Profile Repos JSON Parser error.")
+                    }
+                case 400...499:
+                    completionHandler("An unexpected error occurred in the application", nil)
+                    
+                case 500...599:
+                    completionHandler("An unexpected error occurred with the servers", nil)
+                default:
+                    completionHandler("An unexpected error occurred.", nil)
+                }
+            }
+            }.resume()
+        
+    }
+    
+    class func forkARepositoryPost(url: String, completionHandler: @escaping (String?) -> (Void)) {
+        let baseURL = URL(string: url)
+        var request = URLRequest(url: baseURL!)
+        if let token = UserDefaults.standard.object(forKey: "GithubAccessToken") {
+            request.setValue("token \(token)", forHTTPHeaderField: "Authorization")
+            request.httpMethod = "POST"
+            //httpBody? Data? Idk if i need anything.....
+        }
+        
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
+            if let error = error {
+                print(error.localizedDescription)
+            } else if let httpResponse = response as? HTTPURLResponse {
+                switch httpResponse.statusCode {
+                case 200...299:
+                        //let results = try JSONParsingService.userProfileReposJSONParser(jsonData: data!)
+                    completionHandler("You have successfully forked the repository!")
+                case 400...499:
+                    completionHandler("An unexpected error occurred in the application")
+                    
+                case 500...599:
+                    completionHandler("An unexpected error occurred with the servers")
+                default:
+                    completionHandler("An unexpected error occurred.")
+                }
+            }
+            }.resume()
+            
+    }
+        
+
 }

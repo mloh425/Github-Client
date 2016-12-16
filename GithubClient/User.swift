@@ -10,12 +10,11 @@ import Foundation
 
 struct User {
     let login : String
-    let name: String
     let htmlURL : String
     let bio : String
     let avatarURL : String?
     let publicRepos: Int
-    let ownedPrivateRepos : Int
     let followers : Int
     let following : Int
+    let reposURL : String
 }

@@ -13,6 +13,7 @@ class UserSearchCollectionViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     var userSearchResults : [UserSearch]!
     let imageQueue = OperationQueue()
+    var selectedUser : UserSearch!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,6 +38,12 @@ class UserSearchCollectionViewController: UIViewController {
     }
     */
 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toUserProfile" {
+            let destinationVC = segue.destination as! UserViewController
+            destinationVC.selectedUser = self.selectedUser
+        }
+    }
 }
 
 extension UserSearchCollectionViewController : UICollectionViewDelegate, UICollectionViewDataSource {
@@ -86,5 +93,11 @@ extension UserSearchCollectionViewController : UICollectionViewDelegate, UIColle
             }
         }
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
+        selectedUser = userSearchResults[indexPath.row]
+        performSegue(withIdentifier: "toUserProfile", sender: self)
     }
 }

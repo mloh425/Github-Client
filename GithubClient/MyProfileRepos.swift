@@ -12,5 +12,6 @@ struct MyProfileRepos {
     let name : String
     let description : String
     let htmlURL : String
-    let updatedAt : String
+    let updatedAt: Date
+    let updatedAtString : String
 }

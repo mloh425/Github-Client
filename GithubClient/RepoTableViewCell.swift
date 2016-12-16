@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol RepoForkedDelegate {
+    func successfulFork()
+}
+
 class RepoTableViewCell: UITableViewCell {
     
     
@@ -17,6 +21,8 @@ class RepoTableViewCell: UITableViewCell {
     @IBOutlet weak var updatedLabel: UILabel!
     @IBOutlet weak var forksLabel: UILabel!
     @IBOutlet weak var stargazersLabel: UILabel!
+    var cellRepo: Repos!
+    var delegate: RepoForkedDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -28,5 +34,24 @@ class RepoTableViewCell: UITableViewCell {
         
         // Configure the view for the selected state
     }
+    @IBAction func forkItButtonPressed(_ sender: UIButton) {
+            let url = "https://api.github.com/repos/\(cellRepo.ownerName)/\(cellRepo.name)/forks"
+            GithubService.forkARepositoryPost(url: url, completionHandler: { (errorDescription) -> (Void) in
+                if let errorDescription = errorDescription { //Really should change this and not call it error description. It's successful
+                    if errorDescription == "You have successfully forked the repository!" {
+                        DispatchQueue.main.async(execute: {
+                            if let actualDelegate = self.delegate {
+                            actualDelegate.successfulFork()
+                            }
+                        })
+
+                    } else {
+                        print(errorDescription)
+                    }
+            }
+
+            })
+        //Pass in userURL
     
+    }
 }

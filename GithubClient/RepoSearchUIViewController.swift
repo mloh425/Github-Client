@@ -8,7 +8,7 @@
 
 import UIKit
 
-class RepoSearchUIViewController: UIViewController {
+class RepoSearchUIViewController: UIViewController, RepoForkedDelegate {
 
     @IBOutlet weak var tableView: UITableView!
     var repos : [Repos]!
@@ -26,6 +26,16 @@ class RepoSearchUIViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    func successfulFork() {
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.post(name: Notification.Name(rawValue: "repoForkSuccessful"), object: self)
+        
+        let alert = UIAlertController(title: "Alert", message: "You have successfully forked the repo!", preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
+        //Alert controller to display success Fork!
+        self.present(alert, animated: true, completion: nil)
+        //Broadcast to home VC and fetch again
+    }
 
     /*
     // MARK: - Navigation
@@ -52,11 +62,13 @@ extension RepoSearchUIViewController : UITableViewDelegate, UITableViewDataSourc
         let cell = tableView.dequeueReusableCell(withIdentifier: "RepoCell", for: indexPath) as! RepoTableViewCell
         if let displayRepos = repos {
             let repo = displayRepos[indexPath.row]
+            cell.delegate = self
+            cell.cellRepo = repo
             cell.repoOwnerLabel.text = "\(repo.ownerName)/\(repo.name)"
             cell.forksLabel.text = "Forks: \(repo.forksCount)"
             cell.stargazersLabel.text = "Stargazers: \(repo.stargazersCount)"
             cell.descriptionTextView.text = repo.description
-            cell.updatedLabel.text = "Updated: \(repo.updatedAt)"
+            cell.updatedLabel.text = "Updated: \(repo.updatedAtString)"
         }
         
         return cell

@@ -33,6 +33,7 @@
 		34FED6301DFA451900511082 /* UserCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FED62F1DFA451900511082 /* UserCollectionViewCell.swift */; };
 		34FED6321DFA481A00511082 /* UserSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FED6311DFA481A00511082 /* UserSearch.swift */; };
 		34FED6341DFB460900511082 /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FED6331DFB460900511082 /* ImageCache.swift */; };
+		34FED6371DFBA29900511082 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FED6361DFBA29900511082 /* UserViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,6 +86,7 @@
 		34FED62F1DFA451900511082 /* UserCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCollectionViewCell.swift; sourceTree = "<group>"; };
 		34FED6311DFA481A00511082 /* UserSearch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSearch.swift; sourceTree = "<group>"; };
 		34FED6331DFB460900511082 /* ImageCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
+		34FED6361DFBA29900511082 /* UserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -188,7 +190,7 @@
 			isa = PBXGroup;
 			children = (
 				34FED6291DFA1F1500511082 /* Sign in and Authentication */,
-				340826D81DF243CF0060A44F /* MyProfileViewController.swift */,
+				34FED6351DFBA27D00511082 /* Profile View Controllers */,
 				34FED62A1DFA1F2D00511082 /* Search View Controllers */,
 			);
 			name = "View Controllers";
@@ -236,6 +238,15 @@
 				34FED62D1DFA414800511082 /* UserSearchCollectionViewController.swift */,
 			);
 			name = "Search View Controllers";
+			sourceTree = "<group>";
+		};
+		34FED6351DFBA27D00511082 /* Profile View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				340826D81DF243CF0060A44F /* MyProfileViewController.swift */,
+				34FED6361DFBA29900511082 /* UserViewController.swift */,
+			);
+			name = "Profile View Controllers";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -378,6 +389,7 @@
 				340826EF1DF8E45C0060A44F /* Repos.swift in Sources */,
 				34FED62C1DFA2C0200511082 /* RepoTableViewCell.swift in Sources */,
 				340826DF1DF255610060A44F /* JSONParsingService.swift in Sources */,
+				34FED6371DFBA29900511082 /* UserViewController.swift in Sources */,
 				340826E91DF7756D0060A44F /* MyProfileTableViewCell.swift in Sources */,
 				340826D91DF243CF0060A44F /* MyProfileViewController.swift in Sources */,
 				340826EB1DF8CC540060A44F /* GitHubSearchViewController.swift in Sources */,

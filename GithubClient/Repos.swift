@@ -12,10 +12,12 @@ struct Repos {
     let name : String
     let description : String
     let htmlURL : String
-    let updatedAt : String
+    //let updatedAt : String
     let avatarURL : String
     let forksCount : Int
     let stargazersCount : Int
     let ownerName : String
+    let updatedAt: Date
+    let updatedAtString : String
     //create an image? or cache?
 }
